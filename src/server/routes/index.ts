@@ -37,6 +37,7 @@ router.post('/envio3', (req, res) => {
 });
 
 // COMO MANDAR STATUS CODES PARA O FRONT END - EXEMPLOS 
+// No lugar do StatusCodes você pode colocar o número referente ao código específico de mensagem. Exemplo: 202 == ACCEPTED
 
 router.get("/bomEnvio", (req, res) => {
     return res.status(StatusCodes.ACCEPTED).json({amanda: "quarenta"});

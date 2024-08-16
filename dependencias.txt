@@ -1,1 +1,2 @@
 ts-node-dev ou ts-node
+dotenv => Para podermos ler .env

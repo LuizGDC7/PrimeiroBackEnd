@@ -17,6 +17,7 @@
   "author": "Luiz Guilherme Dias Catulio",
   "license": "MIT",
   "dependencies": {
+    "dotenv": "^16.4.5",
     "express": "^4.19.2",
     "http-status-code": "^2.1.0",
     "http-status-codes": "^2.3.0"
