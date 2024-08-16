@@ -1,0 +1,1 @@
+Podemos usar o segmento "script" no package.json para poder escrevermos comandos npm que serão executados no bash
