@@ -1,2 +1,3 @@
 ts-node-dev ou ts-node
 dotenv => Para podermos ler .env
+tsc-init => para podermos transcrever TS para JS

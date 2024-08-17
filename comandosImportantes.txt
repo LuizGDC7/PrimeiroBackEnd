@@ -1,3 +1,10 @@
 npm init -> criaremos um package.json do projeto
 npm add express -> ?
 npm add -D typescript @types/express ts-node-dev -> adicionamos o typescript como dependência de desenvolvimento, o express naturalmente não foi feito para o typescript. Por isso usamos essa linha. O ts-node-dev automatiza o processo de conversão do código para javascript
+tsc-init
+
+
+// COMPILAR E WATCH
+
+npm run compile -> compila o código
+tsc -w -> ativa o watch, o que altera o build automaticamente a cada alteração salva
