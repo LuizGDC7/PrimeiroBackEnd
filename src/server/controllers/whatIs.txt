@@ -1,0 +1,3 @@
+São as funções de porta de entrada do endpoint
+
+Precisam: ou manipular os dados, ou devolver alguma resposta para o usuário

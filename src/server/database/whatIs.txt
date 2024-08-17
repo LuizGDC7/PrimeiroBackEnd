@@ -1,0 +1,1 @@
+São as funções, configurações e tecnologias necessárias para conectarmos e fazermos o banco de dados funcionar

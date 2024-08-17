@@ -1,3 +1,5 @@
 Podemos usar o segmento "script" no package.json para poder escrevermos comandos npm que serão executados no bash
 
 É uma péssima prática colocar os valores das variáveis .env no Github, então usamos um arquivo chamado .env.example só com o nome das variáveis, mas sem seus valores
+
+Pastas vazias não são versionadas para o Github
