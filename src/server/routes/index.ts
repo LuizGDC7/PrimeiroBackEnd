@@ -1,5 +1,6 @@
 import {Router} from 'express';
 import {StatusCodes} from 'http-status-codes'
+import {CidadesController} from './../controllers'
 
 const router = Router();
 
@@ -46,5 +47,9 @@ router.get("/bomEnvio", (req, res) => {
 router.post("/mauEnvio", (req, res) => {
     return res.status(StatusCodes.BAD_REQUEST).json({amanda: "infinito"});
 });
+
+router.post('/cidades', CidadesController.create);
+
+//router.get('/cidades', CidadesController.getAll);
 
 export {router};

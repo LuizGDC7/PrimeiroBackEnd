@@ -3,6 +3,7 @@ Object.defineProperty(exports, "__esModule", { value: true });
 exports.router = void 0;
 const express_1 = require("express");
 const http_status_codes_1 = require("http-status-codes");
+const controllers_1 = require("./../controllers");
 const router = (0, express_1.Router)();
 exports.router = router;
 router.get('/', (req, res) => {
@@ -39,3 +40,4 @@ router.get("/bomEnvio", (req, res) => {
 router.post("/mauEnvio", (req, res) => {
     return res.status(http_status_codes_1.StatusCodes.BAD_REQUEST).json({ amanda: "infinito" });
 });
+router.post('/cidades', controllers_1.CidadesController.create);
