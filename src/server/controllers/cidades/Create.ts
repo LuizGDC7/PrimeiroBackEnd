@@ -8,6 +8,7 @@ import * as yup from 'yup';
 
 interface Icidade{
     nome:string;
+    estado: string;
     // nomes?: string; Exemplo, caso nome não fosse obrigatorio 
 }
 
@@ -15,6 +16,7 @@ interface Icidade{
 
 const bodyValidation: yup.Schema<Icidade> = yup.object().shape({
     nome: yup.string().required().min(3),
+    estado: yup.string().required().min(2),
 });
 
 export const create = async (req: Request<{}, {}, Icidade>, res: Response) => {
@@ -27,14 +29,18 @@ export const create = async (req: Request<{}, {}, Icidade>, res: Response) => {
     }
 */
     try{
-        validatedData = await bodyValidation.validate(req.body);
-    }catch(error){
-        const yupError = error as yup.ValidationError;
-        return res.json({
-            errors:{
-                default: yupError.message,
+        validatedData = await bodyValidation.validate(req.body, {abortEarly: false});
+    }catch(err){
+        const yupError = err as yup.ValidationError;
+        const errors: Record<string, string> = {};
+
+        yupError.inner.forEach( error => {
+                if(error.path === undefined) return;
+                errors[error.path] = error.message;
             }
-        });
+        );
+
+        return res.status(StatusCodes.BAD_REQUEST).json({errors});
     }
 
 

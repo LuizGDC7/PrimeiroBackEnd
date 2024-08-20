@@ -6,7 +6,7 @@
   "scripts": {
     "test": "karma start",
     "start": "ts-node ./src/index.ts",
-    "dev": "node ./build/index.js",
+    "dev": "npm run compile && node ./build/index.js",
     "build": "webpack -p",
     "compile": "tsc"
   },

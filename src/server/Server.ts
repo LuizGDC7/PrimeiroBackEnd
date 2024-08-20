@@ -1,4 +1,5 @@
 import express from 'express';
+import './shared/services/translationsYup'
 import {router} from './routes'
 
 const server = express();
