@@ -1,6 +1,8 @@
 import {Router} from 'express';
 import {StatusCodes} from 'http-status-codes'
 import {CidadesController} from './../controllers'
+import { BodyValidator } from '../shared/middleware';
+import { cidadeValidator } from '../controllers/cidades/Create';
 
 const router = Router();
 
@@ -48,7 +50,7 @@ router.post("/mauEnvio", (req, res) => {
     return res.status(StatusCodes.BAD_REQUEST).json({amanda: "infinito"});
 });
 
-router.post('/cidades', CidadesController.create);
+router.post('/cidades', CidadesController.cidadeValidator, CidadesController.create);
 
 //router.get('/cidades', CidadesController.getAll);
 

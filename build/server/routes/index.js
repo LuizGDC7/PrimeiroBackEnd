@@ -40,4 +40,4 @@ router.get("/bomEnvio", (req, res) => {
 router.post("/mauEnvio", (req, res) => {
     return res.status(http_status_codes_1.StatusCodes.BAD_REQUEST).json({ amanda: "infinito" });
 });
-router.post('/cidades', controllers_1.CidadesController.create);
+router.post('/cidades', controllers_1.CidadesController.cidadeValidator, controllers_1.CidadesController.create);

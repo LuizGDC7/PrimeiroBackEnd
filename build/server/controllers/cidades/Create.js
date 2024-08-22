@@ -32,36 +32,26 @@ var __awaiter = (this && this.__awaiter) || function (thisArg, _arguments, P, ge
     });
 };
 Object.defineProperty(exports, "__esModule", { value: true });
-exports.create = void 0;
-const http_status_codes_1 = require("http-status-codes");
+exports.create = exports.cidadeValidator = void 0;
 const yup = __importStar(require("yup"));
+const middleware_1 = require("../../shared/middleware");
 //BODY VALIDATION
 const bodyValidation = yup.object().shape({
     nome: yup.string().required().min(3),
     estado: yup.string().required().min(2),
 });
-const create = (req, res) => __awaiter(void 0, void 0, void 0, function* () {
-    const data = req.body;
-    let validatedData = undefined;
-    /*
-        if(data.nome === undefined){
-            return res.status(StatusCodes.BAD_REQUEST).send("Informe o nome corretamente");
-        }
-    */
+const cidadeValidator = (req, res, next) => __awaiter(void 0, void 0, void 0, function* () {
     try {
-        validatedData = yield bodyValidation.validate(req.body, { abortEarly: false });
+        yield (0, middleware_1.BodyValidator)(req, res, bodyValidation);
+        return next();
     }
     catch (err) {
-        const yupError = err;
-        const errors = {};
-        yupError.inner.forEach(error => {
-            if (error.path === undefined)
-                return;
-            errors[error.path] = error.message;
-        });
-        return res.status(http_status_codes_1.StatusCodes.BAD_REQUEST).json({ errors });
+        return err;
     }
-    //console.log(data);
+});
+exports.cidadeValidator = cidadeValidator;
+const create = (req, res) => __awaiter(void 0, void 0, void 0, function* () {
+    const data = req.body;
     return res.send('Create!');
 });
 exports.create = create;

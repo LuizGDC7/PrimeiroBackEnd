@@ -1,6 +1,7 @@
-import { Request, Response } from "express";
+import { Request, RequestHandler, Response } from "express";
 import { StatusCodes } from "http-status-codes";
 import * as yup from 'yup';
+import { BodyValidator } from "../../shared/middleware";
 
 // Request e Response são do express
 
@@ -19,32 +20,18 @@ const bodyValidation: yup.Schema<Icidade> = yup.object().shape({
     estado: yup.string().required().min(2),
 });
 
+export const cidadeValidator: RequestHandler = async (req, res, next) => {
+    try{
+        await BodyValidator<Icidade>(req, res, bodyValidation);
+        return next();
+    } catch(err){
+        return err;
+    }
+}
+
 export const create = async (req: Request<{}, {}, Icidade>, res: Response) => {
 
     const data:Icidade = req.body;
-    let validatedData: Icidade | undefined = undefined;
-/*
-    if(data.nome === undefined){
-        return res.status(StatusCodes.BAD_REQUEST).send("Informe o nome corretamente");
-    }
-*/
-    try{
-        validatedData = await bodyValidation.validate(req.body, {abortEarly: false});
-    }catch(err){
-        const yupError = err as yup.ValidationError;
-        const errors: Record<string, string> = {};
-
-        yupError.inner.forEach( error => {
-                if(error.path === undefined) return;
-                errors[error.path] = error.message;
-            }
-        );
-
-        return res.status(StatusCodes.BAD_REQUEST).json({errors});
-    }
-
-
-    //console.log(data);
 
     return res.send('Create!');
 };
