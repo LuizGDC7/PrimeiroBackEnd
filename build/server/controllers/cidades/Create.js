@@ -32,7 +32,7 @@ var __awaiter = (this && this.__awaiter) || function (thisArg, _arguments, P, ge
     });
 };
 Object.defineProperty(exports, "__esModule", { value: true });
-exports.create = exports.cidadeValidator = void 0;
+exports.create = exports.createQueryValidation = exports.createBodyValidator = void 0;
 const yup = __importStar(require("yup"));
 const middleware_1 = require("../../shared/middleware");
 //BODY VALIDATION
@@ -40,16 +40,21 @@ const bodyValidation = yup.object().shape({
     nome: yup.string().required().min(3),
     estado: yup.string().required().min(2),
 });
-const cidadeValidator = (req, res, next) => __awaiter(void 0, void 0, void 0, function* () {
-    try {
-        yield (0, middleware_1.BodyValidator)(req, res, bodyValidation);
+const queryValidation = yup.object().shape({
+    tipo: yup.string().required().min(4),
+});
+/*
+export const cidadeValidator: RequestHandler = async (req, res, next) => {
+    try{
+        await BodyValidator<Icidade>(req, res, bodyValidation);
         return next();
-    }
-    catch (err) {
+    } catch(err){
         return err;
     }
-});
-exports.cidadeValidator = cidadeValidator;
+}
+*/
+exports.createBodyValidator = (0, middleware_1.validation)('body', bodyValidation);
+exports.createQueryValidation = (0, middleware_1.validation)('query', queryValidation);
 const create = (req, res) => __awaiter(void 0, void 0, void 0, function* () {
     const data = req.body;
     return res.send('Create!');

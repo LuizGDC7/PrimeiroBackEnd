@@ -9,30 +9,22 @@ var __awaiter = (this && this.__awaiter) || function (thisArg, _arguments, P, ge
     });
 };
 Object.defineProperty(exports, "__esModule", { value: true });
-exports.BodyValidator = BodyValidator;
+exports.validation = void 0;
 const http_status_codes_1 = require("http-status-codes");
-/*
-
-Preciso => req, res para poder usar as paradas do express
-        => Tipo genérico T para a interface, e U para objeto para poder fazer as validações
-
-*/
-function BodyValidator(req, res, requirements) {
-    return __awaiter(this, void 0, void 0, function* () {
-        let validatedData = undefined;
-        try {
-            validatedData = yield requirements.validate(req.body, { abortEarly: false });
-        }
-        catch (err) {
-            const yupError = err;
-            const errors = {};
-            yupError.inner.forEach(error => {
-                if (error.path === undefined)
-                    return;
-                errors[error.path] = error.message;
-            });
-            throw res.status(http_status_codes_1.StatusCodes.BAD_REQUEST).json({ errors });
-        }
-    });
-}
-;
+const validation = (field, scheme) => (req, res, next) => __awaiter(void 0, void 0, void 0, function* () {
+    try {
+        yield scheme.validate(req[field], { abortEarly: false });
+        return next();
+    }
+    catch (err) {
+        const yupError = err;
+        const errors = {};
+        yupError.inner.forEach(error => {
+            if (error.path === undefined)
+                return;
+            errors[error.path] = error.message;
+        });
+        return res.status(http_status_codes_1.StatusCodes.BAD_REQUEST).json({ errors });
+    }
+});
+exports.validation = validation;

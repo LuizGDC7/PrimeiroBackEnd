@@ -1,7 +1,7 @@
 import { Request, RequestHandler, Response } from "express";
 import { StatusCodes } from "http-status-codes";
 import * as yup from 'yup';
-import { BodyValidator } from "../../shared/middleware";
+import { validation } from "../../shared/middleware";
 
 // Request e Response são do express
 
@@ -13,13 +13,29 @@ interface Icidade{
     // nomes?: string; Exemplo, caso nome não fosse obrigatorio 
 }
 
+interface IFilter{
+    tipo: string;
+}
+
 //BODY VALIDATION
 
-const bodyValidation: yup.Schema<Icidade> = yup.object().shape({
-    nome: yup.string().required().min(3),
-    estado: yup.string().required().min(2),
-});
+//const bodyValidation: yup.Schema<Icidade> = ;
 
+//const queryValidation: yup.Schema<IFilter> = ;
+
+export const createValidation = validation({
+
+    body: yup.object().shape({
+        nome: yup.string().required().min(3),
+        estado: yup.string().required().min(2),
+    }),
+    query: yup.object().shape({
+        tipo: yup.string().required().min(4),
+    }),
+
+})
+
+/*
 export const cidadeValidator: RequestHandler = async (req, res, next) => {
     try{
         await BodyValidator<Icidade>(req, res, bodyValidation);
@@ -28,6 +44,11 @@ export const cidadeValidator: RequestHandler = async (req, res, next) => {
         return err;
     }
 }
+*/
+
+//export const createBodyValidator = validation('body', bodyValidation);
+
+//export const createQueryValidation = validation('query', queryValidation)
 
 export const create = async (req: Request<{}, {}, Icidade>, res: Response) => {
 
