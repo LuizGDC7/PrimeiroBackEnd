@@ -11,20 +11,31 @@ var __awaiter = (this && this.__awaiter) || function (thisArg, _arguments, P, ge
 Object.defineProperty(exports, "__esModule", { value: true });
 exports.validation = void 0;
 const http_status_codes_1 = require("http-status-codes");
-const validation = (field, scheme) => (req, res, next) => __awaiter(void 0, void 0, void 0, function* () {
-    try {
-        yield scheme.validate(req[field], { abortEarly: false });
-        return next();
+// Objeto funcional que valida um conjunto de schemas
+const validation = (getAllSchemas) => (req, res, next) => __awaiter(void 0, void 0, void 0, function* () {
+    const schemas = getAllSchemas((schema) => schema);
+    const errorsResult = {};
+    Object.entries(schemas).forEach(([key, schema]) => {
+        try {
+            /* ValidateSync executa a função para depois retornar erro ou outra coisa,  Validate retorna uma promise */
+            schema.validateSync(req[key], { abortEarly: false });
+        }
+        catch (err) {
+            const yupError = err;
+            const errors = {};
+            yupError.inner.forEach(error => {
+                if (error.path === undefined)
+                    return;
+                errors[error.path] = error.message;
+            });
+            errorsResult[key] = errors;
+        }
+    });
+    if (Object.entries(errorsResult).length === 0) {
+        next();
     }
-    catch (err) {
-        const yupError = err;
-        const errors = {};
-        yupError.inner.forEach(error => {
-            if (error.path === undefined)
-                return;
-            errors[error.path] = error.message;
-        });
-        return res.status(http_status_codes_1.StatusCodes.BAD_REQUEST).json({ errors });
+    else {
+        return res.status(http_status_codes_1.StatusCodes.BAD_REQUEST).json({ errorsResult });
     }
 });
 exports.validation = validation;

@@ -15,6 +15,7 @@ interface Icidade{
 
 interface IFilter{
     tipo: string;
+    quantidade?: number;
 }
 
 //BODY VALIDATION
@@ -23,17 +24,18 @@ interface IFilter{
 
 //const queryValidation: yup.Schema<IFilter> = ;
 
-export const createValidation = validation({
+export const createValidation = validation((getSchema) => ({
 
-    body: yup.object().shape({
+    body: getSchema<Icidade>(yup.object().shape({
         nome: yup.string().required().min(3),
         estado: yup.string().required().min(2),
-    }),
-    query: yup.object().shape({
+    })),
+    query: getSchema<IFilter>(yup.object().shape({
         tipo: yup.string().required().min(4),
-    }),
+        quantidade: yup.number().min(2),
+    })),
 
-})
+}));
 
 /*
 export const cidadeValidator: RequestHandler = async (req, res, next) => {

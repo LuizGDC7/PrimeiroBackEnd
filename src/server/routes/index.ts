@@ -51,8 +51,7 @@ router.post("/mauEnvio", (req, res) => {
 });
 
 router.post('/cidades',
-    //CidadesController.createBodyValidator,
-    //CidadesController.createQueryValidation,
+    CidadesController.createValidation,
     CidadesController.create
 );
 
