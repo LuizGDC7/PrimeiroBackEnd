@@ -32,39 +32,22 @@ var __awaiter = (this && this.__awaiter) || function (thisArg, _arguments, P, ge
     });
 };
 Object.defineProperty(exports, "__esModule", { value: true });
-exports.create = exports.createValidation = void 0;
+exports.updateById = exports.updateByIdValidation = void 0;
 const http_status_codes_1 = require("http-status-codes");
 const yup = __importStar(require("yup"));
 const middleware_1 = require("../../shared/middleware");
-//BODY VALIDATION
-//const bodyValidation: yup.Schema<Icidade> = ;
-//const queryValidation: yup.Schema<IFilter> = ;
-exports.createValidation = (0, middleware_1.validation)((getSchema) => ({
-    body: getSchema(yup.object().shape({
-        nome: yup.string().required().min(3),
-        estado: yup.string().required().min(2),
+exports.updateByIdValidation = (0, middleware_1.validation)((getSchema) => ({
+    params: getSchema(yup.object().shape({
+        id: yup.number().integer().required().moreThan(0),
     })),
-    /*
-        query: getSchema<IFilter>(yup.object().shape({
-            tipo: yup.string().required().min(4),
-            quantidade: yup.number().min(2),
-        })),
-    */
+    body: getSchema(yup.object().shape({
+        name: yup.string().required().min(3),
+    })),
 }));
-/*
-export const cidadeValidator: RequestHandler = async (req, res, next) => {
-    try{
-        await BodyValidator<Icidade>(req, res, bodyValidation);
-        return next();
-    } catch(err){
-        return err;
-    }
-}
-*/
-//export const createBodyValidator = validation('body', bodyValidation);
-//export const createQueryValidation = validation('query', queryValidation)
-const create = (req, res) => __awaiter(void 0, void 0, void 0, function* () {
+const updateById = (req, res) => __awaiter(void 0, void 0, void 0, function* () {
     const data = req.body;
+    console.log(req.params);
+    console.log(req.body);
     return res.status(http_status_codes_1.StatusCodes.INTERNAL_SERVER_ERROR).send('Não implementado');
 });
-exports.create = create;
+exports.updateById = updateById;

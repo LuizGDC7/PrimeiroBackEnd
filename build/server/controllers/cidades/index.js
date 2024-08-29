@@ -25,5 +25,9 @@ var __importStar = (this && this.__importStar) || function (mod) {
 Object.defineProperty(exports, "__esModule", { value: true });
 exports.CidadesController = void 0;
 const create = __importStar(require("./Create")); // estamos usando alias
+const getAll = __importStar(require("./GetAll"));
+const deleteById = __importStar(require("./DeleteById"));
+const updateById = __importStar(require("./UpdateById"));
+const getById = __importStar(require("./GetById"));
 // ... é o spread, estamos basicamente inserindo diretamente um elemento aqui
-exports.CidadesController = Object.assign({}, create);
+exports.CidadesController = Object.assign(Object.assign(Object.assign(Object.assign(Object.assign({}, create), getAll), deleteById), getById), updateById);
